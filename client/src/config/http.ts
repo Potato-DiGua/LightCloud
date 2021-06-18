@@ -1,7 +1,15 @@
 import axios from "axios";
 
-const instance = axios.create({
-  baseURL: "http://localhost:8080",
-  timeout: 1000,
-});
+let instance;
+if (process.env.NODE_ENV === "development") { //开发环境
+  instance = axios.create({
+    baseURL: "http://localhost",
+    timeout: 15000,
+  });
+} else {
+  instance = axios.create({ //生产环境
+    timeout: 15000,
+  });
+}
+
 export const http = instance;

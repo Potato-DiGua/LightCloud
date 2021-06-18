@@ -10,6 +10,6 @@ export interface FileInfo {
 }
 export const api = {
   getFiles(path: string) {
-    return http.get<ResponseWrap<Array<FileInfo>>>(`/files/${path}`);
+    return http.get<ResponseWrap<Array<FileInfo>>>(path);
   },
 };
