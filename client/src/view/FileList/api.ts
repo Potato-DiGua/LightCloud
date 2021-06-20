@@ -12,4 +12,15 @@ export const api = {
   getFiles(path: string) {
     return http.get<ResponseWrap<Array<FileInfo>>>(path);
   },
+  createDir(path: string, fileName: string) {
+    return http.post<ResponseWrap<boolean>>("/upload/create-dir", {
+      path: path,
+      name: fileName,
+    });
+  },
+  deleteFile(path: string) {
+    return http.get<ResponseWrap<boolean>>("/delete/file", {
+      params: { path: path },
+    });
+  },
 };

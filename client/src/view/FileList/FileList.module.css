@@ -1,0 +1,15 @@
+.block {
+  width: 1200px;
+  margin: 20px auto;
+}
+.nav {
+  height: 32px;
+  line-height: 32px;
+  margin: 5px 0;
+}
+.action_icon {
+  font-size: 16px;
+}
+.topBtnBlock {
+  float: right;
+}

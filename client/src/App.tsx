@@ -1,16 +1,24 @@
 import "./App.css";
 import { Layout } from "antd";
-import { Content, Header } from "antd/lib/layout/layout";
+import { Content } from "antd/lib/layout/layout";
 import { FileList } from "./view/FileList/FileList";
+import { HeaderBlock } from "./view/Header";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
+import { isLoginAsync, selectLoginFlag } from "./view/Login/LoginSlice";
+import { useEffect } from "react";
 
 function App() {
+  const isLogin = useAppSelector(selectLoginFlag);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(isLoginAsync());
+  }, []);
   return (
     <Layout>
-      <Header>
-        <h2 style={{ color: "white" }}>云盘</h2>
-      </Header>
+      <HeaderBlock />
       <Content style={{ minHeight: "100vh" }}>
-        <FileList></FileList>
+        <FileList isLogin={isLogin} />
       </Content>
     </Layout>
   );
