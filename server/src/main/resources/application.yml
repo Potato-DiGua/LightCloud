@@ -1,0 +1,9 @@
+server:
+  port: 80
+  compression:
+    enabled: on
+
+config:
+  filePath: E:\Pictures\Cyberpunk 2077
+  account: root
+  pwd: 123456
