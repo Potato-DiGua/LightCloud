@@ -1,4 +1,4 @@
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button } from "antd";
 import md5 from "js-md5";
 import { useAppDispatch } from "../../app/hooks";
 import { loginAsync } from "./LoginSlice";
