@@ -43,6 +43,6 @@ class UserController(val config: ConfigProperties) {
             } else {
                 ResponseWrap.error("未登录")
             }
-        }
+        }.onErrorReturn(ResponseWrap.error("未登录"))
     }
 }

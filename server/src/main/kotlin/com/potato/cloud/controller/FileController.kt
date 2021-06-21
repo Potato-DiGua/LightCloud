@@ -5,6 +5,7 @@ import com.potato.cloud.model.FileInfo
 import com.potato.cloud.model.FileType
 import com.potato.cloud.model.ResponseWrap
 import com.potato.cloud.properties.ConfigProperties
+import kotlinx.coroutines.*
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.http.ZeroCopyHttpOutputMessage
@@ -28,10 +29,14 @@ class FileController(config: ConfigProperties) {
     private val BASE_PATH = config.filePath
 
     @PassAuth
-    @GetMapping(value = ["/files/**"])
-    fun getFiles(model: Model, request: ServerHttpRequest): Mono<ResponseWrap<MutableList<FileInfo>>> {
+    @GetMapping("/files/**")
+    fun getFiles(
+        model: Model,
+        request: ServerHttpRequest,
+    ): Mono<ResponseWrap<MutableList<FileInfo>>> {
         return Mono.create<String> {
-            it.success(URLDecoder.decode(request.path.value(), "utf-8").removePrefix("/files").removePrefix("/"))
+            val requestPath = request.path.value()
+            it.success(URLDecoder.decode(requestPath, "utf-8").removePrefix("/files").removePrefix("/"))
         }.flatMap { path ->
             val resp: ResponseWrap<MutableList<FileInfo>> = ResponseWrap()
             val realPath = if (path.isBlank()) BASE_PATH else BASE_PATH + File.separator + path
@@ -68,7 +73,7 @@ class FileController(config: ConfigProperties) {
     }
 
     @PassAuth
-    @GetMapping(value = ["/download/**"])
+    @GetMapping("/download/**")
     fun download(request: ServerHttpRequest, response: ServerHttpResponse): Mono<Void> {
         return Mono.create<String> {
             it.success(
