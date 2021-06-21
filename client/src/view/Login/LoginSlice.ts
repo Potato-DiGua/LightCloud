@@ -18,9 +18,13 @@ const initialState: LoginState = {
 // typically used to make async requests.
 export const loginAsync = createAsyncThunk<
   boolean,
-  { account: string; pwd: string }
+  { account: string; pwd: string; randomCode: string }
 >("login/login", async (params) => {
-  const { data: resp } = await api.login(params.account, params.pwd);
+  const { data: resp } = await api.login(
+    params.account,
+    params.pwd,
+    params.randomCode
+  );
   if (resp.status === 0 && resp.data) {
     return true;
   } else {

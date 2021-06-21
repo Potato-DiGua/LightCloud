@@ -1,6 +1,8 @@
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Col, Row } from "antd";
 import md5 from "js-md5";
+import { useState } from "react";
 import { useAppDispatch } from "../../app/hooks";
+import env from "../../config/env";
 import { loginAsync } from "./LoginSlice";
 
 const layout = {
@@ -20,7 +22,11 @@ export const LoginPage = (props: LoginPageProps) => {
 
   const onFinish = (values: any) => {
     dispatch(
-      loginAsync({ account: values.account, pwd: md5(values.password) })
+      loginAsync({
+        account: values.account,
+        pwd: md5(values.password),
+        randomCode: values.randomCode,
+      })
     );
   };
 
@@ -29,6 +35,14 @@ export const LoginPage = (props: LoginPageProps) => {
     if (props && props.onValidateFailed != null) {
       props.onValidateFailed();
     }
+  };
+  const [randomCodeImgUrl, setRandomCodeImgUrl] = useState(
+    `${env.host}/user/captcha`
+  );
+  const onRandomImgClick = () => {
+    setRandomCodeImgUrl(
+      `${env.host}/user/captcha?t=${new Date().getTime().toString()}`
+    );
   };
 
   return (
@@ -54,9 +68,29 @@ export const LoginPage = (props: LoginPageProps) => {
       >
         <Input.Password />
       </Form.Item>
+      <Form.Item
+        label="验证码"
+        name="randomCode"
+        rules={[{ required: true, message: "请输入验证码!" }]}
+      >
+        <Row gutter={8} align="middle">
+          <Col span={14}>
+            <Input />
+          </Col>
+
+          <Col span={10}>
+            <img
+              src={randomCodeImgUrl}
+              alt="验证码"
+              onClick={onRandomImgClick}
+            />
+          </Col>
+        </Row>
+      </Form.Item>
+
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
-          Submit
+          登录
         </Button>
       </Form.Item>
     </Form>
