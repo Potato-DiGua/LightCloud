@@ -3,14 +3,13 @@ package com.potato.cloud
 import org.junit.jupiter.api.Test
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import reactor.core.publisher.SynchronousSink
 
 
 class Test {
     @Test
     fun test() {
         Flux.fromArray<String?>(arrayOf(null, "fu", "ck"))
-            .filter{!it.isNullOrBlank()}
+            .filter { !it.isNullOrBlank() }
 //            .switchIfEmpty(Mono.just("hlw"))
 //            .map {
 //                println("1")
@@ -38,12 +37,18 @@ class Test {
 
     @Test
     fun test2() {
-        val alphabet = Flux.just(-1, 30, 13, 9, 20)
-            .handle { i: Int, sink: SynchronousSink<String?> ->
-                val letter: String? = alphabet(i)
-                if (letter != null) sink.next(letter)
-            }
-
-        alphabet.subscribe { x: String? -> println(x) }
+        val mapTable = ArrayList<Char>(10 + 26 + 26)
+        for (i in '0'..'9') {
+            mapTable.add(i)
+        }
+        for (i in 'a'..'z') {
+            mapTable.add(i)
+        }
+        for (i in 'A'..'Z') {
+            mapTable.add(i)
+        }
+        mapTable.forEach {
+            println(it)
+        }
     }
 }

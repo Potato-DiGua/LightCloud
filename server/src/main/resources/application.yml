@@ -4,9 +4,9 @@ server:
     enabled: on
 
 config:
-#  filePath: E:\Pictures\Cyberpunk 2077
-  filePath: /var/light_cloud/data
-#  account: root
-#  pwd: 123456
-  account: ${LIGHT_CLOUD_ACCOUNT}
-  pwd: ${LIGHT_CLOUD_PWD}
+  filePath: E:\Pictures\Cyberpunk 2077
+#  filePath: /var/light_cloud/data
+  account: root
+  pwd: 123456
+#  account: ${LIGHT_CLOUD_ACCOUNT}
+#  pwd: ${LIGHT_CLOUD_PWD}
