@@ -16,7 +16,11 @@ object CaptchaUtils {
 
     // 干扰线数量
     private const val LINE_COUNT = 50
-    private val font: Font
+    private val font: Font by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+        ClassPathResource("fonts/times.ttf").inputStream.use {
+            Font.createFont(Font.TRUETYPE_FONT, it).deriveFont(18f) ?: throw Exception("加载字体文件失败")
+        }
+    }
 
     init {
         mapTable = ArrayList(10 + 26 + 26)
@@ -29,11 +33,6 @@ object CaptchaUtils {
         for (i in 'A'..'Z') {
             mapTable.add(i)
         }
-
-        font = ClassPathResource("fonts/times.ttf").inputStream.use {
-            Font.createFont(Font.TRUETYPE_FONT, it).deriveFont(18f) ?: throw Exception("加载字体文件失败")
-        }
-
     }
 
     fun getImageCode(width: Int, height: Int): Pair<String, BufferedImage> {
